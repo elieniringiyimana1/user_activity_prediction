@@ -1,0 +1,511 @@
+===================================================================YAML Logic=========================================================================
+models:
+  - name: user_features_ads
+    description: |
+      Aggregates daily ad-related user features.
+      Features include:
+      - Ad impressions
+      - In-house impressions
+      Computed as sums from ad activity sources.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_call_quality
+    description: |
+      Computes daily call quality metrics per user.
+      Features include:
+      - Calls with Bad MOS
+      - Average MOS
+      - Max RTP Setup Time
+      Derived from legacy call records.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_call_rating
+    description: |
+      Calculates daily call rating statistics per user.
+      Features include:
+      - Call Rating Count
+      - Avg Call Rating
+      - Max Call Rating
+      - Min Call Rating
+      Based on user feedback.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_data_usage
+    description: |
+      Summarizes daily data usage per user.
+      Features include:
+      - Total mobile data usage (MB)
+      Sourced from cost tracking tables.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_drawer_event
+    description: |
+      Counts daily occurrences of drawer events per user.
+      Features include:
+      - Drawer event counts by type
+      Based on UI interactions with app drawers.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_embrace_event
+    description: |
+      Aggregates daily Embrace event metrics per user.
+      Features include:
+      - ANR count
+      - Crash count
+      - OOM count
+      - Normal end count
+      - User terminated count
+      Sourced from app stability logs.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_inbound_calls
+    description: |
+      Computes daily inbound call features per user.
+      Features include:
+      - Total inbound call count
+      - Duration
+      - Unanswered calls
+      - Calls over 15s
+      - Media timeouts
+      - Unique contacts called
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+      - name: feature_value_array
+
+  - name: user_features_messages
+    description: |
+      Calculates daily messaging features per user.
+      Features include:
+      - Outbound message count
+      - Inbound message count
+      - Unique contacts messaged
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+      - name: feature_value_array
+
+  - name: user_features_nps_rating
+    description: |
+      Aggregates daily Net Promoter Score (NPS) features per user.
+      Features include:
+      - NPS response count
+      - Average rating
+      - Max rating
+      Based on user survey responses.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_outbound_calls
+    description: |
+      Computes daily outbound call features per user.
+      Features include:
+      - Total outbound call count
+      - Duration
+      - Unanswered calls
+      - Calls over 15s
+      - Media timeouts
+      - Unique contacts called
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+      - name: feature_value_array
+
+  - name: user_features_redial
+    description: |
+      Counts daily occurrences of call redials per user.
+      Feature:
+      - Redials (repeated calls to the same contact within a short time window)
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_sessions
+    description: |
+      Computes daily session features per user.
+      Features include:
+      - Total time in app (minutes)
+      - Tenure (days since registration)
+      - Session count
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_ui_event
+    description: |
+      Counts daily UI event interactions per user.
+      Features include:
+      - Pageviews
+      - Perks
+      - Link clicks
+      Categorized by event type.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+====================================================================Queries============================================================================
+
+Call quality
+=============
+SELECT
+    date_utc,
+    user_id_hex,
+    client_type,
+    'call' AS feature_group,
+    feature_name,
+    feature_value_numeric
+FROM (
+    SELECT
+        call_date AS date_utc,
+        USER_ID_HEX,
+        client_type,
+        COUNT_IF(COALESCE(num_bad_mos_periods, 0) > 0)::FLOAT AS "Calls with Bad MOS",
+        AVG(computed_mos)::FLOAT AS "Average MOS",
+        MAX(RTP_SETUP_TIME)::FLOAT AS "Max RTP Setup Time",
+    FROM
+        {{ ref('legacy_call_end') }}
+
+Call rating
+=============
+SELECT
+    date_utc,
+    user_id_hex,
+    client_type,
+    feature_name,
+    feature_value_numeric
+FROM (
+    SELECT
+        date_utc,
+        user_id_hex,
+        client_type,
+        'call' AS feature_group,
+        COUNT(call_rating)::FLOAT AS "Call Rating Count",
+        AVG(call_rating)::FLOAT AS "Avg Call Rating",
+        MAX(call_rating)::FLOAT AS "Max Call Rating",
+        MIN(call_rating)::FLOAT AS "Min Call Rating",
+    FROM
+        {{ ref('call_ratings_combined_sources') }}
+    WHERE
+        date_utc BETWEEN {{ var('ds') }}::DATE - INTERVAL '3 DAYS' AND {{ var('ds') }}::DATE
+        AND call_rating > 0
+        AND user_id_hex <> '000-00-000-000000000'
+    GROUP BY ALL
+)
+UNPIVOT (feature_value_numeric for feature_name in ("Call Rating Count", "Avg Call Rating", "Max Call Rating", "Min Call Rating"))
+WHERE feature_value_numeric > 0
+
+Calls:
+===========
+WITH outbound_calls AS (
+    SELECT
+        created_at::DATE AS date_utc,
+        user_id_hex,
+        client_type,
+        'outbound_call_' AS feature_name_sub,
+        COUNT(1)::float as count,
+        SUM(call_secs)::float as duration_sec,
+        NULLIFZERO(count_if(call_secs = 0))::float as unanswered,
+        NULLIFZERO(count_if(call_secs > 15))::float as count_over_15s,
+        NULLIFZERO(count_if(hangup_cause = 'MEDIA_TIMEOUT'))::float as media_timeout,
+        ARRAY_UNIQUE_AGG(case when call_secs > 0 then outgoing_call_contact end) as call_contacts
+    FROM {{ ref('outgoing_calls') }}
+    JOIN {{ ref('user_profiles') }} ON username = latest_username
+    WHERE
+        created_at >= {{ var('ds') }}::DATE - INTERVAL '3 DAYS'
+        AND created_at < {{ var('ds') }}::DATE + INTERVAL '1 day'
+    GROUP BY ALL
+
+    UNION ALL
+
+    SELECT
+        created_at::DATE AS date_utc,
+        user_id_hex,
+        client_type,
+        'inbound_call_' AS feature_name_sub,
+        COUNT(1)::float as count,
+        SUM(call_secs)::float as duration_sec,        
+        NULLIFZERO(count_if(call_secs = 0))::float as unanswered,
+        NULLIFZERO(count_if(call_secs > 15))::float as count_over_15s,
+        NULLIFZERO(count_if(hangup_cause = 'MEDIA_TIMEOUT'))::float as media_timeout,
+        ARRAY_UNIQUE_AGG(case when call_secs > 0 then incoming_call_contact end) as call_contacts
+    FROM {{ ref('incoming_calls') }}
+    JOIN {{ ref('user_profiles') }} ON username = latest_username
+ WHERE
+        created_at >= {{ var('ds') }}::DATE - INTERVAL '3 DAYS'
+        AND created_at < {{ var('ds') }}::DATE + INTERVAL '1 day'
+    GROUP BY ALL
+)
+
+SELECT 
+    date_utc,
+    user_id_hex,
+    client_type,
+    'call' AS feature_group,
+    LOWER(feature_name_sub || f) AS feature_name,
+    feature_value_numeric,
+    null::ARRAY AS feature_value_array
+FROM outbound_calls
+UNPIVOT (feature_value_numeric for f in (count, duration_sec, count_over_15s, media_timeout, unanswered))
+WHERE feature_value_numeric > 0
+
+UNION ALL
+
+SELECT 
+    date_utc,
+    user_id_hex,
+    client_type,
+    'call' AS feature_group,
+    feature_name_sub || 'uniq_contacts' AS feature_name,
+    ARRAY_SIZE(call_contacts) AS feature_value_numeric,
+    call_contacts AS feature_value_array
+FROM outbound_calls
+WHERE ARRAY_SIZE(call_contacts) > 0
+
+Data Usage:
+====================
+SELECT
+    date_utc,    
+    user_id_hex,
+    username,
+    null::string as client_type,
+    'Data Usage (mb)' as feature_name,
+    SUM(mb_usage) AS feature_value_numeric
+FROM {{ ref('cost_user_daily_tmobile_cost') }}
+JOIN {{ ref('user_profiles') }} ON username = user_profiles.latest_username
+WHERE
+   date_utc BETWEEN {{ var('ds') }}::DATE - INTERVAL '3 DAYS' AND {{ var('ds') }}::DATE
+GROUP BY ALL
+
+Messages:
+==================
+{% set feature_name_expr -%}
+    LOWER(RTRIM(CONCAT_WS(
+        '_', 
+        REPLACE(direction, 'MESSAGE_DIRECTION_', ''),
+        REPLACE(message_type, 'MESSAGE_TYPE_', ''),
+        IFF(routing_decision = 'ROUTING_DECISION_DENY', 'denied', '')
+    ), '_'))
+{%- endset %}
+
+WITH messages AS (
+
+    SELECT
+        created_date AS date_utc,
+        user_id_hex,
+        {{ pp_normalized_client_type() }} AS client_type,
+        "payload.message_direction" AS direction,
+        CASE
+            WHEN "payload.message_direction" = 'MESSAGE_DIRECTION_INBOUND' AND "payload.origin"[0] = 'mailto:support@enflick.com' 
+            THEN 'MESSAGE_TYPE_SYSTEM_TEXT'
+            ELSE "payload.content_type"
+        END AS message_type,
+        "payload.routing_decision" AS routing_decision,
+        COUNT(*) AS message_count,
+        ARRAY_UNION_AGG(IFF(direction = 'MESSAGE_DIRECTION_INBOUND', "payload.origin", "payload.target")) AS message_contacts
+    FROM {{ source('party_planner_realtime', 'message_delivered') }}
+    WHERE
+        created_date BETWEEN {{ var('ds') }}::DATE - INTERVAL '3 DAYS' AND {{ var('ds') }}::DATE
+        AND NOT (  -- records like these are already reported by MESSAGE_ROUTER, filter out potential duplicate reporting from TN_SERVER
+            instance_id LIKE 'TN_SERVER_%'
+            AND "payload.content_type" IN ('MESSAGE_TYPE_TEXT', 'MESSAGE_TYPE_IMAGE', 'MESSAGE_TYPE_VIDEO', 'MESSAGE_TYPE_AUDIO')
+        )
+        AND user_id_hex IS NOT NULL
+    GROUP BY ALL
+
+)
+
+SELECT
+    date_utc,
+    user_id_hex,
+    client_type,
+    'message' AS feature_group,
+    {{ feature_name_expr }} AS feature_name,
+    message_count AS feature_value_numeric,
+    null::ARRAY AS feature_value_array
+FROM messages
+
+UNION ALL
+
+SELECT
+    date_utc,
+    user_id_hex,
+    client_type,
+    'message' AS feature_group,
+    {{ feature_name_expr }} || '_uniq_contacts' AS feature_name,
+    ARRAY_SIZE(message_contacts) AS feature_value_numeric,
+    -- strip 'tel:' prefix from phone numbers so that calls and messages have consistent contact formatting
+    TRANSFORM(message_contacts, t -> REGEXP_REPLACE(t, '\\btel:')) AS feature_value_array
+FROM messages
+WHERE message_type IN ('MESSAGE_TYPE_TEXT', 'MESSAGE_TYPE_IMAGE', 'MESSAGE_TYPE_VIDEO', 'MESSAGE_TYPE_AUDIO')
+  AND routing_decision <> 'ROUTING_DECISION_DENY'
+
+Sessions:
+=============
+SELECT 
+    date_utc,
+    user_id_hex,
+    username,
+    client_type,
+    feature_name,
+    feature_value_numeric
+FROM (
+    SELECT 
+        date_utc,
+        user_id_hex,
+        username,
+        client_type,
+        SUM(time_in_app_mins_per_day)::FLOAT AS "Time in App (mins)",
+        datediff(day, any_value(registered_at), date_utc)::FLOAT AS "Tenure (days)",
+        SUM(num_sessions)::FLOAT AS "Session count"
+    FROM {{ ref('metrics_daily_userlevel_app_time_sessions') }} 
+    JOIN {{ ref('user_profiles') }} ON username = user_profiles.latest_username
+    WHERE date_utc BETWEEN {{ var('ds') }}::DATE - INTERVAL '3 DAYS' AND {{ var('ds') }}::DATE
+    AND client_type in ('TN_IOS_FREE', 'TN_ANDROID')
+    GROUP BY ALL
+) UNPIVOT (feature_value_numeric for feature_name in ("Time in App (mins)", "Tenure (days)", "Session count"))
+WHERE feature_value_numeric > 0
+
+NPS ratings:
+======================
+SELECT
+    date_utc,
+    user_id_hex,
+    username,
+    client_type,
+    'NPS ' || final_action || ' ' || feature_name_sub AS feature_name,
+    feature_value_numeric
+FROM (
+    SELECT
+        date_utc,
+        user_id_hex,
+        any_value(USERNAME) AS username,
+        client_type,
+        final_action,
+        COUNT(*)::FLOAT AS "Count",
+        AVG(score)::FLOAT AS "Avg Rating",
+        MAX(score)::FLOAT AS "Max Rating",
+    FROM
+        {{ ref('nps_combined_sources') }}
+    WHERE
+        date_utc BETWEEN {{ var('ds') }}::DATE - INTERVAL '3 DAYS' AND {{ var('ds') }}::DATE
+        AND user_id_hex <> '000-00-000-000000000'
+    GROUP BY ALL
+)
+UNPIVOT (feature_value_numeric for feature_name_sub in ("Count", "Avg Rating", "Max Rating"))
+WHERE feature_value_numeric >= 0
