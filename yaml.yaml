@@ -1,0 +1,238 @@
+models:
+  - name: user_features_ads
+    description: |
+      Aggregates daily ad-related user features.
+      Features include:
+      - Ad impressions
+      - In-house impressions
+      Computed as sums from ad activity sources.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_call_quality
+    description: |
+      Computes daily call quality metrics per user.
+      Features include:
+      - Calls with Bad MOS
+      - Average MOS
+      - Max RTP Setup Time
+      Derived from legacy call records.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_call_rating
+    description: |
+      Calculates daily call rating statistics per user.
+      Features include:
+      - Call Rating Count
+      - Avg Call Rating
+      - Max Call Rating
+      - Min Call Rating
+      Based on user feedback.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_data_usage
+    description: |
+      Summarizes daily data usage per user.
+      Features include:
+      - Total mobile data usage (MB)
+      Sourced from cost tracking tables.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_drawer_event
+    description: |
+      Counts daily occurrences of drawer events per user.
+      Features include:
+      - Drawer event counts by type
+      Based on UI interactions with app drawers.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_inbound_calls
+    description: |
+      Computes daily inbound call features per user.
+      Features include:
+      - Total inbound call count
+      - Duration
+      - Unanswered calls
+      - Calls over 15s
+      - Media timeouts
+      - Unique contacts called
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+      - name: feature_value_array
+
+  - name: user_features_messages
+    description: |
+      Calculates daily messaging features per user.
+      Features include:
+      - Outbound message count
+      - Inbound message count
+      - Unique contacts messaged
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+      - name: feature_value_array
+
+  - name: user_features_nps_rating
+    description: |
+      Aggregates daily Net Promoter Score (NPS) features per user.
+      Features include:
+      - NPS response count
+      - Average rating
+      - Max rating
+      Based on user survey responses.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_outbound_calls
+    description: |
+      Computes daily outbound call features per user.
+      Features include:
+      - Total outbound call count
+      - Duration
+      - Unanswered calls
+      - Calls over 15s
+      - Media timeouts
+      - Unique contacts called
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+      - name: feature_value_array
+
+  - name: user_features_redial
+    description: |
+      Counts daily occurrences of call redials per user.
+      Feature:
+      - Redials (repeated calls to the same contact within a short time window)
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_sessions
+    description: |
+      Computes daily session features per user.
+      Features include:
+      - Total time in app (minutes)
+      - Tenure (days since registration)
+      - Session count
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
+
+  - name: user_features_ui_event
+    description: |
+      Counts daily UI event interactions per user.
+      Features include:
+      - Pageviews
+      - Perks
+      - Link clicks
+      Categorized by event type.
+    columns:
+      - name: date_utc
+      - name: user_id_hex
+      - name: username
+      - name: client_type
+      - name: feature_name
+        data_tests:
+          - not_null
+      - name: feature_value_numeric
+        data_tests:
+          - not_null
