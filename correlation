@@ -30,6 +30,20 @@ def plot_correlation_matrix(dataframe, top_n=20):
 
 plot_correlation_matrix(df, top_n=15)
 
+======
+import shap
+
+# Get model and transform data
+model = best_pipeline.named_steps['model']
+X_train_transformed = best_pipeline.named_steps['preprocess'].transform(X_train)
+
+# Sample for speed
+X_sample = X_train_transformed[:1000]
+
+# SHAP
+explainer = shap.TreeExplainer(model)
+shap_values = explainer.shap_values(X_sample)
+
 # Plot 1: Beeswarm (detailed)
 plt.figure()
 shap.summary_plot(shap_values, X_sample, feature_names=X_train.columns, show=False)
