@@ -1,17 +1,31 @@
-def plot_target_correlation(dataframe, target='ACTIVE_DAYS_IN_WEEK', top_n=25):
-    """Bar chart of feature correlations with target"""
+def plot_correlation_matrix(dataframe, top_n=20):
+    """Plot heatmap showing correlations between features"""
     numeric_data = dataframe.select_dtypes(include=['number'])
-    correlations = numeric_data.corr()[target].drop(target).sort_values(key=abs, ascending=False)
+    correlation_matrix = numeric_data.corr()
     
-    top_corr = correlations.head(top_n)
+    # Get top N features most correlated with target
+    target_corr = correlation_matrix['ACTIVE_DAYS_IN_WEEK'].abs().sort_values(ascending=False)
+    top_features = target_corr.head(top_n).index.tolist()
     
-    plt.figure(figsize=(12, 10))
-    colors = ['green' if x > 0 else 'red' for x in top_corr.values]
-    top_corr.plot(kind='barh', color=colors)
-    plt.xlabel('Correlation with Target')
-    plt.title(f'Top {top_n} Features Correlated with {target}')
-    plt.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
+    # Filter correlation matrix to only top features
+    filtered_corr = correlation_matrix.loc[top_features, top_features]
+    
+    # Create heatmap
+    plt.figure(figsize=(14, 12))
+    sns.heatmap(filtered_corr, annot=True, fmt='.2f', cmap='coolwarm',
+                center=0, square=True, linewidths=0.5, 
+                cbar_kws={"shrink": 0.8},
+                annot_kws={"size": 8})
+    plt.title(f'Top {top_n} Features - Correlation Matrix', fontsize=16, pad=20)
+    plt.xticks(rotation=45, ha='right')
+    plt.yticks(rotation=0)
     plt.tight_layout()
     plt.show()
+    
+    # Print correlations with target
+    print("\nCorrelation with Target (ACTIVE_DAYS_IN_WEEK):")
+    print("=" * 60)
+    for feature, corr_value in target_corr.head(top_n).items():
+        print(f"{feature}: {corr_value:.4f}")
 
-plot_target_correlation(df)
+plot_correlation_matrix(df, top_n=15)
