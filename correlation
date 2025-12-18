@@ -1,0 +1,17 @@
+def plot_target_correlation(dataframe, target='ACTIVE_DAYS_IN_WEEK', top_n=25):
+    """Bar chart of feature correlations with target"""
+    numeric_data = dataframe.select_dtypes(include=['number'])
+    correlations = numeric_data.corr()[target].drop(target).sort_values(key=abs, ascending=False)
+    
+    top_corr = correlations.head(top_n)
+    
+    plt.figure(figsize=(12, 10))
+    colors = ['green' if x > 0 else 'red' for x in top_corr.values]
+    top_corr.plot(kind='barh', color=colors)
+    plt.xlabel('Correlation with Target')
+    plt.title(f'Top {top_n} Features Correlated with {target}')
+    plt.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
+    plt.tight_layout()
+    plt.show()
+
+plot_target_correlation(df)
