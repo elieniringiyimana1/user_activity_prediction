@@ -29,3 +29,15 @@ def plot_correlation_matrix(dataframe, top_n=20):
         print(f"{feature}: {corr_value:.4f}")
 
 plot_correlation_matrix(df, top_n=15)
+
+# Plot 1: Beeswarm (detailed)
+plt.figure()
+shap.summary_plot(shap_values, X_sample, feature_names=X_train.columns, show=False)
+plt.tight_layout()
+plt.show()
+
+# Plot 2: Bar (simple importance)
+plt.figure()
+shap.summary_plot(shap_values, X_sample, feature_names=X_train.columns, plot_type="bar", show=False)
+plt.tight_layout()
+plt.show()
